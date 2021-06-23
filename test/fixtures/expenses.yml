@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  expenseDate: 2021-06-23 18:24:40
+  Description: MyString
+
+two:
+  expenseDate: 2021-06-23 18:24:40
+  Description: MyString
