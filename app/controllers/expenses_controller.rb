@@ -2,19 +2,63 @@ class ExpensesController < ApplicationController
   before_action :set_expense, only: [:show, :update, :destroy]
 
   # GET /expenses
+  # sample output
+  # {
+  #       "expense": {
+  #           "id": 1,
+  #           "expenseDate": "2021-06-24T00:48:49.259Z",
+  #           "Description": "I am going to shopping",
+  #           "created_at": "2021-06-24T00:48:49.262Z",
+  #           "updated_at": "2021-06-24T00:48:49.262Z",
+  #           "category_id": 1,
+  #           "user_id": 1
+  #       },
+  #       "category": {
+  #           "id": 1,
+  #           "name": "Shopping",
+  #           "created_at": "2021-06-23T22:58:45.229Z",
+  #           "updated_at": "2021-06-23T22:58:45.229Z"
+  #       },
+  #       "user": {
+  #           "id": 1,
+  #           "name": "ajay",
+  #           "email": "ajay@gmail.com",
+  #           "created_at": "2021-06-24T00:45:51.700Z",
+  #           "updated_at": "2021-06-24T00:45:51.700Z"
+  #       }
+  #   },
   def index
     @expenses = Expense.all
+    op = []
+    @expenses.each do |expense|
 
-    render json: @expenses
+      temp = 
+      {
+        'expense' => expense,
+        'category' => expense.category,
+        'user' => expense.user
+    }
+      op.push(temp)
+    end
+    render json: op.to_json
+    # render json: @expenses
   end
 
   # GET /expenses/1
   def show
-    render json: @expense
+    # render json: @expense
+    # temp = Expense.includes(:category, :user).where(:id=> @expense.id).to_json
+    temp= {
+      'expense' => @expense,
+      'category' => @expense.category,
+      'user' => @expense.user
+    }
+    render json: temp
   end
 
   # POST /expenses
   def create
+    binding.pry
     @expense = Expense.new(expense_params)
 
     if @expense.save
@@ -46,6 +90,6 @@ class ExpensesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expense_params
-      params.require(:expense).permit(:expenseDate, :Description)
+      params.require(:expense).permit(:expenseDate, :Description, :category_id, :user_id)
     end
 end
