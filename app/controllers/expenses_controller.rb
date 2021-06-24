@@ -27,6 +27,9 @@ class ExpensesController < ApplicationController
   #           "updated_at": "2021-06-24T00:45:51.700Z"
   #       }
   #   },
+  
+
+  # when user asks for a expense, response will be expense , category, friends details to which amount to be split with, user's details
   def index
     @expenses = Expense.all
     op = []
@@ -58,13 +61,35 @@ class ExpensesController < ApplicationController
 
   # POST /expenses
   def create
-    binding.pry
     @expense = Expense.new(expense_params)
-
+    split_money
     if @expense.save
       render json: @expense, status: :created, location: @expense
     else
       render json: @expense.errors, status: :unprocessable_entity
+    end
+  end
+
+  def split_money
+    paidBy = User.find_by(id: @expense.user_id)
+    return unless(paidBy)
+    splitHash = @expense.splitWith.to_hash
+    # numberOfUsers = splitHash.keys.count
+    # amountToBePaid = numberOfUser
+    splitHash = splitHash.delete_if{|key,value| key.to_i==@expense.user_id}  #  do not split amount on your name when you have paid the bill
+    splitHash.each do |user_id,amount_paid|
+
+      payee = User.find_by(id: user_id)
+      return unless(payee)
+
+      if !(Payment.find_by(:Payee => payee.id, :PaidBy => paidBy.id)).nil?
+        payment =  Payment.find_by(:Payee => payee.id, :PaidBy => paidBy.id)
+        payment.amount = payment.amount + amount_paid
+        payment.save!
+      else
+       a=  Payment.create(:Payee => payee.id, :PaidBy => paidBy.id, :amount => amount_paid)
+       a.save!
+      end
     end
   end
 
@@ -90,6 +115,6 @@ class ExpensesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expense_params
-      params.require(:expense).permit(:expenseDate, :Description, :category_id, :user_id)
+      params.require(:expense).permit(:expenseDate, :Description, :category_id, :user_id, :splitWith => {})
     end
 end

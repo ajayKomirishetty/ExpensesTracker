@@ -13,6 +13,7 @@ gem 'puma', '~> 5.0'
 gem 'deep_pluck'
 
 gem 'pry'
+gem 'composite_primary_keys', '~> 13.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
