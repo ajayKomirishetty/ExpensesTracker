@@ -1,24 +1,8 @@
-# README
+- This Rails project is a split wise clone
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Description :
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- whenever you want to split a bill(restaurant/hotel/trave...) among your friends, you can use this application.
+- All you need to do is click on add expense button, select the amount to split, select friends list to split. You good
+- Amount specified will split among your friends
+- 
