@@ -23,14 +23,16 @@ Request Type : POST
 
 Request Body in Json format : 
 
+```JSON
 {
     "name" : "test",
     "email":"test@gmail.com"
 }
-
+```
 
 Output format in Json:
 
+```JSON
 {
     "id": 4,
     "name": "test",
@@ -38,6 +40,7 @@ Output format in Json:
     "created_at": "2021-06-24T23:56:54.500Z",
     "updated_at": "2021-06-24T23:56:54.500Z"
 }
+```
 
 1. Get list of all Users:
 
@@ -46,6 +49,7 @@ Request Type : GET
 
 Output format in Json:
 
+```JSON
 [
     {
         "id": 1,
@@ -62,11 +66,14 @@ Output format in Json:
         "updated_at": "2021-06-24T15:49:51.173Z"
     }
 ]
+```
 
 3. Add an expense and split with friends:
 
 Request URL:http://localhost:3000/expenses
 Request Type : POST
+
+```JSON
 
 {   
     "expenseDate":"2021-06-24T00:48:49.259Z",
@@ -78,12 +85,13 @@ Request Type : POST
        "1": 300
     }
 }
-
+```
 4. retrieve amount you will receive from your friends
 
 Request URL: http://localhost:3000/payments
 Request Type : GET
 
+```JSON
 [
     {
         "PaidBy": 2,
@@ -102,3 +110,4 @@ Request Type : GET
         "updated_at": "2021-06-25T00:00:05.151Z"
     }
 ]
+```
